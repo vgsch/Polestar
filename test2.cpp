@@ -9,9 +9,29 @@ int main()  {
 
     ifstream input_stream("input.txt");
     string line;
+    stack<char> stack;
+    int errorResult = 0, i;
 
     while(getline(input_stream, line))  {
-        cout << " Line: " << line << endl;
+        i = 0;
+        while(line[i] != '\0')  {
+            switch (line[i])  {
+                case '(':
+                case '[':
+                case '{':
+                case '<':
+                    stack.push(line[i]);
+                    break;
+            }
+            i++;
+        }
+        cout << "Line: ";
+        while(!stack.empty())  {
+            cout << stack.top();
+            stack.pop();
+        }
+        cout << endl;
+        
     }
     // we need a stack to push opening chars and to pop when finding a closing char
 
