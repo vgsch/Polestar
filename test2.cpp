@@ -1,9 +1,18 @@
 #include <iostream>
 #include <stack>
+#include <fstream>
+#include <string>
+
 using namespace std;
 
-int main() {
+int main()  {
 
+    ifstream input_stream("input.txt");
+    string line;
+
+    while(getline(input_stream, line))  {
+        cout << " Line: " << line << endl;
+    }
     // we need a stack to push opening chars and to pop when finding a closing char
 
     // when finding a closing char and top of stack is not the proper opener, line is corrupted
