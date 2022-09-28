@@ -10,10 +10,10 @@ int main()  {
     ifstream input_stream("input.txt");
     string line;
     stack<char> stack;
-    int errorResult = 0, i, oldValue;
+    int errorResult = 0, i, oldValue, incompleteResult;
 
     while(getline(input_stream, line))  {
-        i = 0; oldValue = errorResult;
+        i = 0; oldValue = errorResult; incompleteResult = 0;
 
         while(line[i] != '\0')  {
             switch (line[i])  {
@@ -60,10 +60,23 @@ int main()  {
             i++;
         }
 
-        while(!stack.empty())  {
-            stack.pop();
+        if(oldValue != errorResult)  { //Corrupted Line
+            while(!stack.empty())  {
+                stack.pop();
+            }
         }
-        
+        else  { // Incomplete Line
+            while(!stack.empty())  {
+                switch(stack.top())  {
+                    case '(':  incompleteResult = incompleteResult * 5 + 1; break;
+                    case '[':  incompleteResult = incompleteResult * 5 + 2; break;
+                    case '{':  incompleteResult = incompleteResult * 5 + 3; break;
+                    case '<':  incompleteResult = incompleteResult * 5 + 4; break;
+                }
+                stack.pop();
+            }
+            cout << "Line incomplete " << incompleteResult << endl;
+        }
     }
 
 }
