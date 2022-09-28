@@ -2,6 +2,7 @@
 #include <stack>
 #include <fstream>
 #include <string>
+#include <list>
 
 using namespace std;
 
@@ -10,7 +11,10 @@ int main()  {
     ifstream input_stream("input.txt");
     string line;
     stack<char> stack;
-    int errorResult = 0, i, oldValue, incompleteResult;
+    int errorResult = 0, i, oldValue, j;
+    list<double> incompleteList;
+    list<double>::iterator it = incompleteList.begin();
+    double incompleteResult;
 
     while(getline(input_stream, line))  {
         i = 0; oldValue = errorResult; incompleteResult = 0;
@@ -76,7 +80,11 @@ int main()  {
                 stack.pop();
             }
             cout << "Line incomplete " << incompleteResult << endl;
+            incompleteList.push_back(incompleteResult);
         }
     }
-
+    
+    incompleteList.sort();
+    advance(it, incompleteList.size()/2 + 1);
+    cout << "Middle : " <<fixed<< *it << endl;
 }
